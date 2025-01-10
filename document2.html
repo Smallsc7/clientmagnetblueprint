@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Magnet Metrics Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .dashboard {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #e0e0e0;
+        }
+
+        .tab-button.active {
+            background: #2196f3;
+            color: white;
+        }
+
+        .metric-category {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .category-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .metric-info {
+            flex-grow: 1;
+        }
+
+        .metric-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .metric-target {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .metric-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input[type="number"] {
+            width: 80px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .unit {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .save-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .save-button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <h1>Client Magnet Metrics Dashboard</h1>
+        
+        <div class="tabs">
+            <button class="tab-button active" onclick="showTab('daily')">Daily</button>
+            <button class="tab-button" onclick="showTab('weekly')">Weekly</button>
+            <button class="tab-button" onclick="showTab('monthly')">Monthly</button>
+        </div>
+
+        <!-- Daily Metrics -->
+        <div id="daily" class="tab-content active">
+            <div class="metric-category">
+                <div class="category-title">Ideal Client Clarity</div>
+                <div class="metric-row">
+                    <div class="metric-info">
+                        <div class="metric-name">Avatar Completion</div>
+                        <div class="metric-target">Target: 100%</div>
+                    </div>
+                    <div class="metric-input">
+                        <input type="number" min="0" max="100">
+                        <span class="unit">%</span>
+                    </div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-info">
+                        <div class="metric-name">Pain Points Identified</div>
+                        <div class="metric-target">Target: 3 points</div>
+                    </div>
+                    <div class="metric-input">
+                        <input type="number" min="0" max="3">
+                        <span class="unit">points</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="metric-category">
+                <div class="category-title">Message Development</div>
+                <div class="metric-row">
+                    <div class="metric-info">
+                        <div class="metric-name">Core Message Crafted</div>
+                        <div class="metric-target">Target: 1 message</div>
+                    </div>
+                    <div class="metric-input">
+                        <input type="number" min="0" max="1">
+                        <span class="unit">message</span>
+                    </div>
+                </div>
+            </div>
+            <button class="save-button" onclick="saveMetrics()">Save Daily Metrics</button>
+        </div>
+
+        <!-- Weekly Metrics -->
+        <div id="weekly" class="tab-content">
+            <div class="metric-category">
+                <div class="category-title">Visibility Growth</div>
+                <div class="metric-row">
+                    <div class="metric-info">
+                        <div class="metric-name">Profile Views</div>
+                        <div class="metric-target">Target: 100 views</div>
+                    </div>
+                    <div class="metric-input">
+                        <input type="number" min="0">
+                        <span class="unit">views</span>
+                    </div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-info">
+                        <div class="metric-name">Post Engagement</div>
+                        <div class="metric-target">Target: 50 interactions</div>
+                    </div>
+                    <div class="metric-input">
+                        <input type="number" min="0">
+                        <span class="unit">interactions</span>
+                    </div>
+                </div>
+            </div>
+            <button class="save-button" onclick="saveMetrics()">Save Weekly Metrics</button>
+        </div>
+
+        <!-- Monthly Metrics -->
+        <div id="monthly" class="tab-content">
+            <div class="metric-category">
+                <div class="category-title">Client Conversion</div>
+                <div class="metric-row">
+                    <div class="metric-info">
+                        <div class="metric-name">New Clients</div>
+                        <div class="metric-target">Target: 3 clients</div>
+                    </div>
+                    <div class="metric-input">
+                        <input type="number" min="0">
+                        <span class="unit">clients</span>
+                    </div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-info">
+                        <div class="metric-name">Revenue Growth</div>
+                        <div class="metric-target">Target: 30%</div>
+                    </div>
+                    <div class="metric-input">
+                        <input type="number" min="0">
+                        <span class="unit">%</span>
+                    </div>
+                </div>
+            </div>
+            <button class="save-button" onclick="saveMetrics()">Save Monthly Metrics</button>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function saveMetrics() {
+            // You can add logic here to save the metrics
+            alert('Metrics saved successfully!');
+        }
+    </script>
+</body>
+</html>
